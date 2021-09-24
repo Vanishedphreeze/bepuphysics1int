@@ -132,9 +132,9 @@ namespace BEPUutilities
             Vector3.Dot(ref ac, ref ac, out ACdotAC);
             Vector3.Dot(ref ac, ref ap, out ACdotAP);
 
-            Fix64 denom = F64.C1 / (ABdotAB * ACdotAC - ABdotAC * ABdotAC);
-            Fix64 u = (ACdotAC * ABdotAP - ABdotAC * ACdotAP) * denom;
-            Fix64 v = (ABdotAB * ACdotAP - ABdotAC * ABdotAP) * denom;
+            Fix64 denom = ABdotAB * ACdotAC - ABdotAC * ABdotAC;
+            Fix64 u = (ACdotAC * ABdotAP - ABdotAC * ACdotAP) / denom;
+            Fix64 v = (ABdotAB * ACdotAP - ABdotAC * ABdotAP) / denom;
 
             return (u >= -Toolbox.BigEpsilon) && (v >= -Toolbox.BigEpsilon) && (u + v <= F64.C1 + Toolbox.BigEpsilon);
 
@@ -209,9 +209,9 @@ namespace BEPUutilities
             Vector3.Dot(ref ac, ref ac, out ACdotAC);
             Vector3.Dot(ref ac, ref ap, out ACdotAP);
 
-            Fix64 denom = F64.C1 / (ABdotAB * ACdotAC - ABdotAC * ABdotAC);
-            Fix64 u = (ACdotAC * ABdotAP - ABdotAC * ACdotAP) * denom;
-            Fix64 v = (ABdotAB * ACdotAP - ABdotAC * ABdotAP) * denom;
+            Fix64 denom = ABdotAB * ACdotAC - ABdotAC * ABdotAC;
+            Fix64 u = (ACdotAC * ABdotAP - ABdotAC * ACdotAP) / denom;
+            Fix64 v = (ABdotAB * ACdotAP - ABdotAC * ABdotAP) / denom;
 
             return (u >= -Toolbox.BigEpsilon) && (v >= -Toolbox.BigEpsilon) && (u + v <= F64.C1 + Toolbox.BigEpsilon);
 
@@ -408,9 +408,9 @@ namespace BEPUutilities
                 return VoronoiRegion.BC;
             }
             //Inside triangle?
-            Fix64 denom = F64.C1 / (va + vb + vc);
-            v = vb * denom;
-            w = vc * denom;
+            Fix64 denom = va + vb + vc;
+            v = vb / denom;
+            w = vc / denom;
             Vector3 abv;
             Vector3.Multiply(ref ab, v, out abv);
             Vector3 acw;
@@ -515,9 +515,9 @@ namespace BEPUutilities
             subsimplex.Add(a);
             subsimplex.Add(b);
             subsimplex.Add(c);
-            Fix64 denom = F64.C1 / (va + vb + vc);
-            v = vb * denom;
-            w = vc * denom;
+            Fix64 denom = va + vb + vc;
+            v = vb / denom;
+            w = vc / denom;
             Vector3 abv;
             Vector3.Multiply(ref ab, v, out abv);
             Vector3 acw;
@@ -636,9 +636,9 @@ namespace BEPUutilities
             subsimplex.Add(i);
             subsimplex.Add(j);
             subsimplex.Add(k);
-            Fix64 denom = F64.C1 / (va + vb + vc);
-            v = vb * denom;
-            w = vc * denom;
+            Fix64 denom = va + vb + vc;
+            v = vb / denom;
+            w = vc / denom;
             baryCoords.Add(F64.C1 - v - w);
             baryCoords.Add(v);
             baryCoords.Add(w);
@@ -1699,9 +1699,8 @@ namespace BEPUutilities
 
             if (denominator < F64.Cm1em9 || denominator > F64.C1em9)
             {
-                denominator = F64.C1 / denominator;
-                aWeight = numeratorU * denominator;
-                bWeight = numeratorV * denominator;
+                aWeight = numeratorU / denominator;
+                bWeight = numeratorV / denominator;
                 cWeight = F64.C1 - aWeight - bWeight;
             }
             else

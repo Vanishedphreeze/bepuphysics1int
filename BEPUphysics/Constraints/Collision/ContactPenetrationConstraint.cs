@@ -185,7 +185,7 @@ namespace BEPUphysics.Constraints.Collision
             Fix64 effectiveMassInverse = entryA + entryB;
             Fix64 updateRate = F64.C1 / dt;
             softness = CollisionResponseSettings.Softness * effectiveMassInverse * updateRate;
-            velocityToImpulse = -1 / (softness + effectiveMassInverse);
+            velocityToImpulse = -F64.C1 / (softness + effectiveMassInverse);
 
 
             //Bounciness and bias (penetration correction)

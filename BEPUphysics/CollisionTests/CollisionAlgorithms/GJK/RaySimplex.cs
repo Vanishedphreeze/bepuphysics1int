@@ -232,9 +232,9 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms.GJK
 
 
             //On the face of the triangle.
-            Fix64 denom = F64.C1 / (va + vb + vc);
-            Fix64 v = vb * denom;
-            Fix64 w = vc * denom;
+            Fix64 denom = va + vb + vc;
+            Fix64 v = vb / denom;
+            Fix64 w = vc / denom;
             Vector3.Multiply(ref ab, v, out point);
             Vector3 acw;
             Vector3.Multiply(ref ac, w, out acw);
@@ -463,9 +463,9 @@ namespace BEPUphysics.CollisionTests.CollisionAlgorithms.GJK
                 simplex.A = simplexA;
                 simplex.B = simplexB;
                 simplex.C = simplexC;
-                Fix64 denom = F64.C1 / (va + vb + vc);
-                Fix64 w = vc * denom;
-                Fix64 v = vb * denom;
+                Fix64 denom = va + vb + vc;
+                Fix64 w = vc / denom;
+                Fix64 v = vb / denom;
                 Vector3.Multiply(ref ab, v, out point);
                 Vector3 acw;
                 Vector3.Multiply(ref ac, w, out acw);

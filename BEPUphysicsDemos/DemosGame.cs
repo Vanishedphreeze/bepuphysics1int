@@ -48,6 +48,7 @@ namespace BEPUphysicsDemos
         private double FPStoDisplay;
         private double averagePhysicsTime;
         private int FPStotalFramesSinceLast;
+        private int TotalFrameSinceStart;
 
         //Input
         public KeyboardState KeyboardInput;
@@ -71,12 +72,12 @@ namespace BEPUphysicsDemos
 
         private readonly Type[] demoTypes = new[]
                                                 {
+                                                    typeof (LotsOSpheresDemo),
                                                     typeof (CharacterPlaygroundDemo),
                                                     typeof (TankDemo),
                                                     typeof (WallDemo),
                                                     typeof (PyramidDemo),
                                                     typeof (ColosseumDemo),
-                                                    typeof (LotsOSpheresDemo),
                                                     typeof (JengaDemo),
                                                     typeof (FancyShapesDemo),
                                                     typeof (CompoundBodiesDemo),
@@ -145,6 +146,8 @@ namespace BEPUphysicsDemos
             ContactDrawer = new ContactDrawer(this);
             BoundingBoxDrawer = new BoundingBoxDrawer(this);
             SimulationIslandDrawer = new SimulationIslandDrawer(this);
+
+            TotalFrameSinceStart = 0;
 
             base.Initialize();
         }
@@ -430,6 +433,7 @@ namespace BEPUphysicsDemos
             int right = GraphicsDevice.Viewport.Bounds.Width;
             if (displayUI)
             {
+                TotalFrameSinceStart++;
                 FPStotalSinceLast += gameTime.ElapsedGameTime.TotalSeconds;
                 FPStotalFramesSinceLast++;
                 if (gameTime.TotalGameTime.TotalSeconds - FPSlastTime > .25 && gameTime.ElapsedGameTime.TotalSeconds > 0)
@@ -441,6 +445,7 @@ namespace BEPUphysicsDemos
                     FPStotalSinceLast = 0;
                     FPStotalFramesSinceLast = 0;
                 }
+                // Console.WriteLine($"Frame : {TotalFrameSinceStart}");
 
                 DataTextDrawer.Draw("FPS: ", FPStoDisplay, new Vector2(50, bottom - 150));
                 DataTextDrawer.Draw("Physics Time (ms): ", averagePhysicsTime, new Vector2(50, bottom - 133));
