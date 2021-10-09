@@ -114,7 +114,7 @@ namespace BEPUphysics.Constraints.Collision
         ///<param name="dt">Timestep duration.</param>
         public override void Update(Fix64 dt)
         {
-
+            Console.Write("update || ");
             entityADynamic = entityA != null && entityA.isDynamic;
             entityBDynamic = entityB != null && entityB.isDynamic;
 
@@ -146,7 +146,8 @@ namespace BEPUphysics.Constraints.Collision
                 angularBY = (linearAZ * rb.X) - (linearAX * rb.Z);
                 angularBZ = (linearAX * rb.Y) - (linearAY * rb.X);
             }
-
+            // Console.WriteLine($"contact pos: {contact.Position}, entity pos: {entityB.position}"); // contact pos
+            // Console.WriteLine($"linearAX: {linearAX}, linearAY: {linearAY}, linearAZ: {linearAZ}");
 
             //Compute inverse effective mass matrix
             Fix64 entryA, entryB;
@@ -186,7 +187,14 @@ namespace BEPUphysics.Constraints.Collision
             Fix64 updateRate = F64.C1 / dt;
             softness = CollisionResponseSettings.Softness * effectiveMassInverse * updateRate;
             velocityToImpulse = -F64.C1 / (softness + effectiveMassInverse);
+            // Console.Write($"softness: {softness}, effectiveMassInverse: {effectiveMassInverse}, updateRate: {updateRate}");
+            // Console.Write($"entryA: {entryA}, entryB: {entryB}");
+            // Console.Write($"angularBX: {angularBX}, angularBY: {angularBY}, angularBZ: {angularBZ}");
 
+            // almost same
+            // Console.Write($"{entityB.inertiaTensorInverse.M11}, {entityB.inertiaTensorInverse.M21}, {entityB.inertiaTensorInverse.M31}\n");
+            // Console.Write($"{entityB.inertiaTensorInverse.M12}, {entityB.inertiaTensorInverse.M22}, {entityB.inertiaTensorInverse.M32}\n");
+            // Console.Write($"{entityB.inertiaTensorInverse.M13}, {entityB.inertiaTensorInverse.M23}, {entityB.inertiaTensorInverse.M33}\n");
 
             //Bounciness and bias (penetration correction)
             if (contact.PenetrationDepth >= F64.C0)
@@ -230,7 +238,7 @@ namespace BEPUphysics.Constraints.Collision
                 //}
             }
 
-
+            Console.Write("|| update over\n");
         }
 
         /// <summary>

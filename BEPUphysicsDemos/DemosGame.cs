@@ -445,7 +445,7 @@ namespace BEPUphysicsDemos
                     FPStotalSinceLast = 0;
                     FPStotalFramesSinceLast = 0;
                 }
-                // Console.WriteLine($"Frame : {TotalFrameSinceStart}");
+                Console.WriteLine($"Frame : {TotalFrameSinceStart}");
 
                 DataTextDrawer.Draw("FPS: ", FPStoDisplay, new Vector2(50, bottom - 150));
                 DataTextDrawer.Draw("Physics Time (ms): ", averagePhysicsTime, new Vector2(50, bottom - 133));
